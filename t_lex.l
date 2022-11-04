@@ -40,6 +40,15 @@ REAL		{return lREAL;}
 
 // Identifiers, Integer numbers, Real numbers
 
+// Identifiers
+{ID}        {sscanf(yytext, "%s", name); return lID;}
+
+// Integer numbers
+{DIG}+      {sscanf(yytext, "%d", ival); return lINUM;}
+
+// Real numbers
+{RNUM}      {sscanf(yytext, "%f", rval); return lRNUM;}
+
 \"{NQUO}*\"	{sscanf(yytext,"%s", qstr); return lQSTR;}
 "/*"		{ BEGIN(C_COMMENT); }
 <C_COMMENT>"*/"	{ BEGIN(INITIAL); }

@@ -63,6 +63,81 @@ oformal	:	lCOMMA formal oformal
 
 // Statements and Expressions
 
+//Statements
+
+// Block
+block :	lBEGIN stmts lEND
+		{ printf("Block -> BEGIN Statements END\n"); }
+	;
+
+// Statements
+stmts :	stmt ostmts
+		{ printf("Statements -> Statement OtherStatements\n"); }
+	;
+
+//OtherStatments
+ostmts :	stmts
+		{ printf("OtherStatements -> Statements\n"); }
+	|
+		{ printf("OtherStatements -> \n"); }
+	;
+
+// Statement
+stmt :	block
+		{ printf("Statement -> Block\n"); }
+	|	localvardcl
+		{ printf("Statement -> LocalVarDecl\n"); }
+	|	assignstmt
+		{ printf("Statement -> AssignStmt\n"); }
+	|	returnstmt
+		{ printf("Statement -> ReturnStmt\n"); }
+	|	ifstmt
+		{ printf("Statement -> IfStmt\n"); }
+	|	writestmt
+		{ printf("Statement -> WriteStmt\n"); }
+	|	readstmt
+		{ printf("Statement -> ReadStmt\n"); }
+	;
+
+//LocalVarDecl
+localvardcl :	type lID lSEMI
+			{ printf("LocalVarDecl -> Type ID ;\n"); }
+			|	type assignstmt
+			{ printf("LocalVarDecl -> Type AssignStmt\n"); }
+			;
+
+// AssignStmt
+assignstmt :	lID lASSIGN expr lSEMI
+			{ printf("AssignStmt -> ID := Expression ;\n"); }
+		;	
+		
+//ReturnStmt
+returnstmt :	lRETURN expr lSEMI
+			{ printf("ReturnStmt -> RETURN Expression ;\n"); }
+		;
+
+//IfStmt
+ifstmt :	lIF lLP boolexpr lRP stmt
+		{ printf("IfStmt -> IF ( BoolExpression ) Statement\n"); }
+	|	lIF lLP boolexpr lRP stmt lELSE stmt
+		{ printf("IfStmt -> IF ( BoolExpression ) Statement\n"); }
+	;
+
+//WriteStmt
+writestmt :	lWRITE lLP expr lCOMMA lQSTR lRP lSEMI
+			{ printf("WriteStmt -> WRITE ( Expression , QString ) ;\n"); }
+		;
+
+//ReadStmt
+readstmt :	lREAD lLP lID lCOMMA lQSTR lRP lSEMI
+			{ printf("ReadStmt -> READ ( ID , QString ) ;\n"); }
+		;
+
+//Expressions
+
+
+
+
 %%
 
 int yyerror(char *s)
