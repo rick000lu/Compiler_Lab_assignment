@@ -15,7 +15,6 @@ t_parse.c:	t_parse.y
 
 t_parse.o:	t_parse.c t2c.h t_parse.h
 	gcc -c -o t_parse.o t_parse.c
-
 t_lex.c:	t_lex.l
 	flex -ot_lex.c t_lex.l
 

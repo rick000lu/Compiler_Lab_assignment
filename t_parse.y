@@ -63,7 +63,7 @@ oformal	:	lCOMMA formal oformal
 
 // Statements and Expressions
 
-//Statements
+//All Statements
 
 // Block
 block :	lBEGIN stmts lEND
@@ -76,8 +76,8 @@ stmts :	stmt ostmts
 	;
 
 //OtherStatments
-ostmts :	stmts
-		{ printf("OtherStatements -> Statements\n"); }
+ostmts :	stmt ostmts
+		{ printf("OtherStatements -> Statement OtherStatements\n"); }
 	|
 		{ printf("OtherStatements -> \n"); }
 	;
@@ -117,11 +117,15 @@ returnstmt :	lRETURN expr lSEMI
 		;
 
 //IfStmt
-ifstmt :	lIF lLP boolexpr lRP stmt
-		{ printf("IfStmt -> IF ( BoolExpression ) Statement\n"); }
-	|	lIF lLP boolexpr lRP stmt lELSE stmt
+ifstmt :	lIF lLP boolexpr lRP stmt elsestmt
 		{ printf("IfStmt -> IF ( BoolExpression ) Statement\n"); }
 	;
+
+elsestmt :	lELSE stmt
+			{ printf("ElseStmt -> ELSE Statement\n"); }
+		|
+			{ printf("ElseStmt -> \n"); }
+		;
 
 //WriteStmt
 writestmt :	lWRITE lLP expr lCOMMA lQSTR lRP lSEMI
@@ -133,10 +137,82 @@ readstmt :	lREAD lLP lID lCOMMA lQSTR lRP lSEMI
 			{ printf("ReadStmt -> READ ( ID , QString ) ;\n"); }
 		;
 
-//Expressions
+//All Expressions
 
+//Expression
+expr :	multiexpr omultiexpr
+		{ printf("Expression -> MultiplicativeExpr OtherMultiplicativeExpr\n"); }
+	;
 
+//MultiplicativeExpr
+multiexpr :	primaryexpr oprimaryexpr
+			{ printf("MultiplicativeExpr -> PrimaryExpr OtherPrimaryExpr\n"); }
+		;
 
+//OtherMultiplicativeExpr
+omultiexpr :	lADD multiexpr omultiexpr
+				{ printf("OtherMultiplicativeExpr -> + MultiplicativeExpr OtherMultiplicativeExpr\n"); }
+			|	lMINUS multiexpr omultiexpr
+				{ printf("OtherMultiplicativeExpr -> - MultiplicativeExpr OtherMultiplicativeExpr\n"); }
+			|
+				{ printf("OtherMultiplicativeExpr -> \n"); }
+			;
+
+//PrimaryExpr
+primaryexpr : lINUM
+			{ printf("PrimaryExpr -> INum\n"); }
+		|	lRNUM
+			{ printf("PrimaryExpr -> RNum\n"); }
+		|	lID
+			{ printf("PrimaryExpr -> ID\n"); }
+		|	lLP expr lRP
+			{ printf("PrimaryExpr -> ( Expression )\n"); }
+		|	lID lLP actualparams lRP
+			{ printf("PrimaryExpr -> ID ( ActuralParams )\n"); }
+		;
+
+//OtherPrimaryExpr
+oprimaryexpr :	lTIMES primaryexpr oprimaryexpr
+					{ printf("OtherPrimaryExpr -> * PrimaryExpr OtherPrimaryExpr\n"); }
+				|	lDIVIDE primaryexpr oprimaryexpr
+					{ printf("OtherPrimaryExpr -> / PrimaryExpr OtherPrimaryExpr\n"); }
+				|
+					{printf("OtherPrimaryExpr -> \n");}
+				;
+
+//BoolExpr
+boolexpr :	expr lEQU expr
+			{ printf("BoolExpr -> Expression == Expression\n"); }
+		|	expr lNEQ expr
+			{ printf("BoolExpr -> Expression != Expression\n"); }
+		|	expr lGT expr
+			{ printf("BoolExpr -> Expression > Expression\n"); }
+		|	expr lGE expr
+			{ printf("BoolExpr -> Expression >= Expression\n"); }
+		|	expr lLT expr
+			{ printf("BoolExpr -> Expression < Expression\n"); }
+		|	expr lLE expr
+			{ printf("BoolExpr -> Expression <= Expression\n"); }
+		;
+
+//ActualParams
+actualparams :	actualparam
+				{ printf("ActualParams -> ActualParam\n"); }
+			|
+				{ printf("ActualParams -> \n"); }
+			;
+
+//ActualParam
+actualparam :	expr oactualparam
+				{ printf("ActualParam -> Expression OtherActualParam\n"); }
+			;
+
+//OtherActualParam
+oactualparam : 	lCOMMA expr oactualparam
+				{ printf("OtherActualParam -> , Expression OtherActualParam\n"); }
+			|
+				{ printf("OtherActualParam -> \n"); }
+			;				
 
 %%
 
