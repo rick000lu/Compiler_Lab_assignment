@@ -44,10 +44,10 @@ REAL		{return lREAL;}
 {ID}        {sscanf(yytext, "%s", name); return lID;}
 
     /* Integer numbers */
-DIG      {sscanf(yytext, "%d", ival); return lINUM;}
+{DIG}      {sscanf(yytext, "%d", &ival); return lINUM;}
 
     /* Real numbers */
-RNUM     {sscanf(yytext, "%f", rval); return lRNUM;}
+{RNUM}     {sscanf(yytext, "%f", &rval); return lRNUM;}
 
 \"{NQUO}*\"	{sscanf(yytext,"%s", qstr); return lQSTR;}
 "/*"		{ BEGIN(C_COMMENT); }

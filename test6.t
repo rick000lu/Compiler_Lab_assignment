@@ -1,5 +1,4 @@
 INT MAIN f()
 BEGIN
-    REAL a;
-    a := 3.2;
+    REAL a := 3.2;
 END
