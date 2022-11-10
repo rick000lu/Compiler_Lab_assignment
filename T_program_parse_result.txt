@@ -1,0 +1,473 @@
+==========Parse result for test.t:==========
+Type -> INT
+Type -> INT
+Formal -> Type ID
+Type -> INT
+Formal -> Type ID
+OtherFormals -> 
+OtherFormals -> COMMA Formal OtherFormals
+Formals -> Formal OtherFormals
+Type -> INT
+LocalVarDecl -> Type ID ;
+Statement -> LocalVarDecl
+PrimaryExpr -> ID
+PrimaryExpr -> ID
+OtherPrimaryExpr -> 
+OtherPrimaryExpr -> * PrimaryExpr OtherPrimaryExpr
+MultiplicativeExpr -> PrimaryExpr OtherPrimaryExpr
+PrimaryExpr -> ID
+PrimaryExpr -> ID
+OtherPrimaryExpr -> 
+OtherPrimaryExpr -> * PrimaryExpr OtherPrimaryExpr
+MultiplicativeExpr -> PrimaryExpr OtherPrimaryExpr
+OtherMultiplicativeExpr -> 
+OtherMultiplicativeExpr -> - MultiplicativeExpr OtherMultiplicativeExpr
+Expression -> MultiplicativeExpr OtherMultiplicativeExpr
+AssignStmt -> ID := Expression ;
+Statement -> AssignStmt
+PrimaryExpr -> ID
+OtherPrimaryExpr -> 
+MultiplicativeExpr -> PrimaryExpr OtherPrimaryExpr
+OtherMultiplicativeExpr -> 
+Expression -> MultiplicativeExpr OtherMultiplicativeExpr
+ReturnStmt -> RETURN Expression ;
+Statement -> ReturnStmt
+OtherStatements -> 
+OtherStatements -> Statement OtherStatements
+OtherStatements -> Statement OtherStatements
+Statements -> Statement OtherStatements
+Block -> BEGIN Statements END
+MethodDecl -> Type ID LP Formals RP Block
+Type -> INT
+Formals -> 
+Type -> INT
+LocalVarDecl -> Type ID ;
+Statement -> LocalVarDecl
+ReadStmt -> READ ( ID , QString ) ;
+Statement -> ReadStmt
+Type -> INT
+LocalVarDecl -> Type ID ;
+Statement -> LocalVarDecl
+ReadStmt -> READ ( ID , QString ) ;
+Statement -> ReadStmt
+Type -> INT
+LocalVarDecl -> Type ID ;
+Statement -> LocalVarDecl
+PrimaryExpr -> ID
+OtherPrimaryExpr -> 
+MultiplicativeExpr -> PrimaryExpr OtherPrimaryExpr
+OtherMultiplicativeExpr -> 
+Expression -> MultiplicativeExpr OtherMultiplicativeExpr
+PrimaryExpr -> ID
+OtherPrimaryExpr -> 
+MultiplicativeExpr -> PrimaryExpr OtherPrimaryExpr
+OtherMultiplicativeExpr -> 
+Expression -> MultiplicativeExpr OtherMultiplicativeExpr
+OtherActualParam -> 
+OtherActualParam -> , Expression OtherActualParam
+ActualParam -> Expression OtherActualParam
+ActualParams -> ActualParam
+PrimaryExpr -> ID ( ActuralParams )
+OtherPrimaryExpr -> 
+MultiplicativeExpr -> PrimaryExpr OtherPrimaryExpr
+PrimaryExpr -> ID
+OtherPrimaryExpr -> 
+MultiplicativeExpr -> PrimaryExpr OtherPrimaryExpr
+OtherMultiplicativeExpr -> 
+Expression -> MultiplicativeExpr OtherMultiplicativeExpr
+PrimaryExpr -> ID
+OtherPrimaryExpr -> 
+MultiplicativeExpr -> PrimaryExpr OtherPrimaryExpr
+OtherMultiplicativeExpr -> 
+Expression -> MultiplicativeExpr OtherMultiplicativeExpr
+OtherActualParam -> 
+OtherActualParam -> , Expression OtherActualParam
+ActualParam -> Expression OtherActualParam
+ActualParams -> ActualParam
+PrimaryExpr -> ID ( ActuralParams )
+OtherPrimaryExpr -> 
+MultiplicativeExpr -> PrimaryExpr OtherPrimaryExpr
+OtherMultiplicativeExpr -> 
+OtherMultiplicativeExpr -> + MultiplicativeExpr OtherMultiplicativeExpr
+Expression -> MultiplicativeExpr OtherMultiplicativeExpr
+AssignStmt -> ID := Expression ;
+Statement -> AssignStmt
+PrimaryExpr -> ID
+OtherPrimaryExpr -> 
+MultiplicativeExpr -> PrimaryExpr OtherPrimaryExpr
+OtherMultiplicativeExpr -> 
+Expression -> MultiplicativeExpr OtherMultiplicativeExpr
+WriteStmt -> WRITE ( Expression , QString ) ;
+Statement -> WriteStmt
+OtherStatements -> 
+OtherStatements -> Statement OtherStatements
+OtherStatements -> Statement OtherStatements
+OtherStatements -> Statement OtherStatements
+OtherStatements -> Statement OtherStatements
+OtherStatements -> Statement OtherStatements
+OtherStatements -> Statement OtherStatements
+Statements -> Statement OtherStatements
+Block -> BEGIN Statements END
+MethodDecl -> Type MAIN ID LP Formals RP Block
+MethodDecls -> MethodDecl
+MethodDecls -> MethodDecl MethodDecls
+Program -> MethodDecls
+Parsed OK!
+ 
+==========Parse result for test1.t:==========
+ 
+Type -> INT
+Formals -> 
+Type -> REAL
+LocalVarDecl -> Type ID ;
+Statement -> LocalVarDecl
+ReadStmt -> READ ( ID , QString ) ;
+Statement -> ReadStmt
+PrimaryExpr -> ID
+OtherPrimaryExpr -> 
+MultiplicativeExpr -> PrimaryExpr OtherPrimaryExpr
+OtherMultiplicativeExpr -> 
+Expression -> MultiplicativeExpr OtherMultiplicativeExpr
+WriteStmt -> WRITE ( Expression , QString ) ;
+Statement -> WriteStmt
+OtherStatements -> 
+OtherStatements -> Statement OtherStatements
+OtherStatements -> Statement OtherStatements
+Statements -> Statement OtherStatements
+Block -> BEGIN Statements END
+MethodDecl -> Type MAIN ID LP Formals RP Block
+MethodDecls -> MethodDecl
+Program -> MethodDecls
+Parsed OK!
+ 
+==========Parse result for test2.t:==========
+ 
+Type -> INT
+Formals -> 
+Type -> REAL
+LocalVarDecl -> Type ID ;
+Statement -> LocalVarDecl
+ReadStmt -> READ ( ID , QString ) ;
+Statement -> ReadStmt
+Type -> REAL
+PrimaryExpr -> RNum
+OtherPrimaryExpr -> 
+MultiplicativeExpr -> PrimaryExpr OtherPrimaryExpr
+OtherMultiplicativeExpr -> 
+Expression -> MultiplicativeExpr OtherMultiplicativeExpr
+AssignStmt -> ID := Expression ;
+LocalVarDecl -> Type AssignStmt
+Statement -> LocalVarDecl
+PrimaryExpr -> ID
+OtherPrimaryExpr -> 
+MultiplicativeExpr -> PrimaryExpr OtherPrimaryExpr
+OtherMultiplicativeExpr -> 
+Expression -> MultiplicativeExpr OtherMultiplicativeExpr
+WriteStmt -> WRITE ( Expression , QString ) ;
+Statement -> WriteStmt
+OtherStatements -> 
+OtherStatements -> Statement OtherStatements
+OtherStatements -> Statement OtherStatements
+OtherStatements -> Statement OtherStatements
+Statements -> Statement OtherStatements
+Block -> BEGIN Statements END
+MethodDecl -> Type MAIN ID LP Formals RP Block
+MethodDecls -> MethodDecl
+Program -> MethodDecls
+Parsed OK!
+ 
+==========Parse result for test3.t:==========
+ 
+Type -> INT
+Formals -> 
+Type -> REAL
+LocalVarDecl -> Type ID ;
+Statement -> LocalVarDecl
+ReadStmt -> READ ( ID , QString ) ;
+Statement -> ReadStmt
+Type -> REAL
+PrimaryExpr -> INum
+PrimaryExpr -> RNum
+PrimaryExpr -> ID
+OtherPrimaryExpr -> 
+OtherPrimaryExpr -> * PrimaryExpr OtherPrimaryExpr
+OtherPrimaryExpr -> * PrimaryExpr OtherPrimaryExpr
+MultiplicativeExpr -> PrimaryExpr OtherPrimaryExpr
+OtherMultiplicativeExpr -> 
+Expression -> MultiplicativeExpr OtherMultiplicativeExpr
+AssignStmt -> ID := Expression ;
+LocalVarDecl -> Type AssignStmt
+Statement -> LocalVarDecl
+PrimaryExpr -> ID
+OtherPrimaryExpr -> 
+MultiplicativeExpr -> PrimaryExpr OtherPrimaryExpr
+OtherMultiplicativeExpr -> 
+Expression -> MultiplicativeExpr OtherMultiplicativeExpr
+WriteStmt -> WRITE ( Expression , QString ) ;
+Statement -> WriteStmt
+PrimaryExpr -> RNum
+PrimaryExpr -> ID
+PrimaryExpr -> ID
+OtherPrimaryExpr -> 
+OtherPrimaryExpr -> * PrimaryExpr OtherPrimaryExpr
+OtherPrimaryExpr -> * PrimaryExpr OtherPrimaryExpr
+MultiplicativeExpr -> PrimaryExpr OtherPrimaryExpr
+OtherMultiplicativeExpr -> 
+Expression -> MultiplicativeExpr OtherMultiplicativeExpr
+WriteStmt -> WRITE ( Expression , QString ) ;
+Statement -> WriteStmt
+OtherStatements -> 
+OtherStatements -> Statement OtherStatements
+OtherStatements -> Statement OtherStatements
+OtherStatements -> Statement OtherStatements
+OtherStatements -> Statement OtherStatements
+Statements -> Statement OtherStatements
+Block -> BEGIN Statements END
+MethodDecl -> Type MAIN ID LP Formals RP Block
+MethodDecls -> MethodDecl
+Program -> MethodDecls
+Parsed OK!
+ 
+==========Parse result for test4.t:==========
+ 
+Type -> INT
+Formals -> 
+Type -> REAL
+LocalVarDecl -> Type ID ;
+Statement -> LocalVarDecl
+ReadStmt -> READ ( ID , QString ) ;
+Statement -> ReadStmt
+Type -> REAL
+PrimaryExpr -> INum
+PrimaryExpr -> RNum
+PrimaryExpr -> ID
+OtherPrimaryExpr -> 
+OtherPrimaryExpr -> * PrimaryExpr OtherPrimaryExpr
+OtherPrimaryExpr -> * PrimaryExpr OtherPrimaryExpr
+MultiplicativeExpr -> PrimaryExpr OtherPrimaryExpr
+OtherMultiplicativeExpr -> 
+Expression -> MultiplicativeExpr OtherMultiplicativeExpr
+AssignStmt -> ID := Expression ;
+LocalVarDecl -> Type AssignStmt
+Statement -> LocalVarDecl
+PrimaryExpr -> ID
+OtherPrimaryExpr -> 
+MultiplicativeExpr -> PrimaryExpr OtherPrimaryExpr
+OtherMultiplicativeExpr -> 
+Expression -> MultiplicativeExpr OtherMultiplicativeExpr
+WriteStmt -> WRITE ( Expression , QString ) ;
+Statement -> WriteStmt
+PrimaryExpr -> RNum
+PrimaryExpr -> ID
+PrimaryExpr -> ID
+OtherPrimaryExpr -> 
+OtherPrimaryExpr -> * PrimaryExpr OtherPrimaryExpr
+OtherPrimaryExpr -> * PrimaryExpr OtherPrimaryExpr
+MultiplicativeExpr -> PrimaryExpr OtherPrimaryExpr
+OtherMultiplicativeExpr -> 
+Expression -> MultiplicativeExpr OtherMultiplicativeExpr
+WriteStmt -> WRITE ( Expression , QString ) ;
+Statement -> WriteStmt
+OtherStatements -> 
+OtherStatements -> Statement OtherStatements
+OtherStatements -> Statement OtherStatements
+OtherStatements -> Statement OtherStatements
+OtherStatements -> Statement OtherStatements
+Statements -> Statement OtherStatements
+Block -> BEGIN Statements END
+MethodDecl -> Type MAIN ID LP Formals RP Block
+MethodDecls -> MethodDecl
+Program -> MethodDecls
+Parsed OK!
+ 
+==========Parse result for test5.t:==========
+ 
+Type -> INT
+Type -> INT
+Formal -> Type ID
+Type -> INT
+Formal -> Type ID
+OtherFormals -> 
+OtherFormals -> COMMA Formal OtherFormals
+Formals -> Formal OtherFormals
+Type -> INT
+LocalVarDecl -> Type ID ;
+Statement -> LocalVarDecl
+PrimaryExpr -> ID
+PrimaryExpr -> ID
+OtherPrimaryExpr -> 
+OtherPrimaryExpr -> * PrimaryExpr OtherPrimaryExpr
+MultiplicativeExpr -> PrimaryExpr OtherPrimaryExpr
+PrimaryExpr -> ID
+PrimaryExpr -> ID
+OtherPrimaryExpr -> 
+OtherPrimaryExpr -> * PrimaryExpr OtherPrimaryExpr
+MultiplicativeExpr -> PrimaryExpr OtherPrimaryExpr
+OtherMultiplicativeExpr -> 
+OtherMultiplicativeExpr -> - MultiplicativeExpr OtherMultiplicativeExpr
+Expression -> MultiplicativeExpr OtherMultiplicativeExpr
+AssignStmt -> ID := Expression ;
+Statement -> AssignStmt
+PrimaryExpr -> ID
+OtherPrimaryExpr -> 
+MultiplicativeExpr -> PrimaryExpr OtherPrimaryExpr
+OtherMultiplicativeExpr -> 
+Expression -> MultiplicativeExpr OtherMultiplicativeExpr
+ReturnStmt -> RETURN Expression ;
+Statement -> ReturnStmt
+OtherStatements -> 
+OtherStatements -> Statement OtherStatements
+OtherStatements -> Statement OtherStatements
+Statements -> Statement OtherStatements
+Block -> BEGIN Statements END
+MethodDecl -> Type ID LP Formals RP Block
+Type -> INT
+Formals -> 
+Type -> INT
+LocalVarDecl -> Type ID ;
+Statement -> LocalVarDecl
+ReadStmt -> READ ( ID , QString ) ;
+Statement -> ReadStmt
+Type -> INT
+LocalVarDecl -> Type ID ;
+Statement -> LocalVarDecl
+ReadStmt -> READ ( ID , QString ) ;
+Statement -> ReadStmt
+Type -> INT
+LocalVarDecl -> Type ID ;
+Statement -> LocalVarDecl
+PrimaryExpr -> ID
+OtherPrimaryExpr -> 
+MultiplicativeExpr -> PrimaryExpr OtherPrimaryExpr
+OtherMultiplicativeExpr -> 
+Expression -> MultiplicativeExpr OtherMultiplicativeExpr
+PrimaryExpr -> ID
+OtherPrimaryExpr -> 
+MultiplicativeExpr -> PrimaryExpr OtherPrimaryExpr
+OtherMultiplicativeExpr -> 
+Expression -> MultiplicativeExpr OtherMultiplicativeExpr
+OtherActualParam -> 
+OtherActualParam -> , Expression OtherActualParam
+ActualParam -> Expression OtherActualParam
+ActualParams -> ActualParam
+PrimaryExpr -> ID ( ActuralParams )
+OtherPrimaryExpr -> 
+MultiplicativeExpr -> PrimaryExpr OtherPrimaryExpr
+PrimaryExpr -> ID
+OtherPrimaryExpr -> 
+MultiplicativeExpr -> PrimaryExpr OtherPrimaryExpr
+OtherMultiplicativeExpr -> 
+Expression -> MultiplicativeExpr OtherMultiplicativeExpr
+PrimaryExpr -> ID
+OtherPrimaryExpr -> 
+MultiplicativeExpr -> PrimaryExpr OtherPrimaryExpr
+OtherMultiplicativeExpr -> 
+Expression -> MultiplicativeExpr OtherMultiplicativeExpr
+OtherActualParam -> 
+OtherActualParam -> , Expression OtherActualParam
+ActualParam -> Expression OtherActualParam
+ActualParams -> ActualParam
+PrimaryExpr -> ID ( ActuralParams )
+OtherPrimaryExpr -> 
+MultiplicativeExpr -> PrimaryExpr OtherPrimaryExpr
+OtherMultiplicativeExpr -> 
+OtherMultiplicativeExpr -> + MultiplicativeExpr OtherMultiplicativeExpr
+Expression -> MultiplicativeExpr OtherMultiplicativeExpr
+AssignStmt -> ID := Expression ;
+Statement -> AssignStmt
+PrimaryExpr -> ID
+OtherPrimaryExpr -> 
+MultiplicativeExpr -> PrimaryExpr OtherPrimaryExpr
+OtherMultiplicativeExpr -> 
+Expression -> MultiplicativeExpr OtherMultiplicativeExpr
+WriteStmt -> WRITE ( Expression , QString ) ;
+Statement -> WriteStmt
+OtherStatements -> 
+OtherStatements -> Statement OtherStatements
+OtherStatements -> Statement OtherStatements
+OtherStatements -> Statement OtherStatements
+OtherStatements -> Statement OtherStatements
+OtherStatements -> Statement OtherStatements
+OtherStatements -> Statement OtherStatements
+Statements -> Statement OtherStatements
+Block -> BEGIN Statements END
+MethodDecl -> Type MAIN ID LP Formals RP Block
+MethodDecls -> MethodDecl
+MethodDecls -> MethodDecl MethodDecls
+Program -> MethodDecls
+Parsed OK!
+ 
+==========Parse result for test6.t:==========
+ 
+Type -> INT
+Formals -> 
+Type -> REAL
+PrimaryExpr -> RNum
+OtherPrimaryExpr -> 
+MultiplicativeExpr -> PrimaryExpr OtherPrimaryExpr
+OtherMultiplicativeExpr -> 
+Expression -> MultiplicativeExpr OtherMultiplicativeExpr
+AssignStmt -> ID := Expression ;
+LocalVarDecl -> Type AssignStmt
+Statement -> LocalVarDecl
+OtherStatements -> 
+Statements -> Statement OtherStatements
+Block -> BEGIN Statements END
+MethodDecl -> Type MAIN ID LP Formals RP Block
+MethodDecls -> MethodDecl
+Program -> MethodDecls
+Parsed OK!
+ 
+==========Parse result for test7.t:==========
+ 
+Type -> INT
+Type -> INT
+Formal -> Type ID
+Type -> INT
+Formal -> Type ID
+OtherFormals -> 
+OtherFormals -> COMMA Formal OtherFormals
+Formals -> Formal OtherFormals
+Type -> INT
+LocalVarDecl -> Type ID ;
+Statement -> LocalVarDecl
+PrimaryExpr -> ID
+PrimaryExpr -> ID
+OtherPrimaryExpr -> 
+OtherPrimaryExpr -> * PrimaryExpr OtherPrimaryExpr
+MultiplicativeExpr -> PrimaryExpr OtherPrimaryExpr
+PrimaryExpr -> ID
+PrimaryExpr -> ID
+OtherPrimaryExpr -> 
+OtherPrimaryExpr -> * PrimaryExpr OtherPrimaryExpr
+MultiplicativeExpr -> PrimaryExpr OtherPrimaryExpr
+OtherMultiplicativeExpr -> 
+OtherMultiplicativeExpr -> - MultiplicativeExpr OtherMultiplicativeExpr
+Expression -> MultiplicativeExpr OtherMultiplicativeExpr
+AssignStmt -> ID := Expression ;
+Statement -> AssignStmt
+PrimaryExpr -> ID
+OtherPrimaryExpr -> 
+MultiplicativeExpr -> PrimaryExpr OtherPrimaryExpr
+OtherMultiplicativeExpr -> 
+Expression -> MultiplicativeExpr OtherMultiplicativeExpr
+ReturnStmt -> RETURN Expression ;
+Statement -> ReturnStmt
+OtherStatements -> 
+OtherStatements -> Statement OtherStatements
+OtherStatements -> Statement OtherStatements
+Statements -> Statement OtherStatements
+Block -> BEGIN Statements END
+MethodDecl -> Type ID LP Formals RP Block
+Type -> INT
+Formals -> 
+Type -> INT
+LocalVarDecl -> Type ID ;
+Statement -> LocalVarDecl
+ReadStmt -> READ ( ID , QString ) ;
+Statement -> ReadStmt
+Type -> INT
+LocalVarDecl -> Type ID ;
+Statement -> LocalVarDecl
+syntax error
+ 
