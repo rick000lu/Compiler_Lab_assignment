@@ -160,6 +160,12 @@ stmt	:	block
 
 vardcl	:	type lID lSEMI
 		{ // Write your own semantic action here.
+			$$ = create_stm();
+			$$ -> stm_id = sVDCL1;
+			$$ -> exp1 = create_exp();
+			$$ -> exp1 -> exp_id = eID;
+			strcpy($$ -> exp1 -> name, $2);
+			$$ -> exp1 -> exp1 = $1; 
 		}
 	|	type astm
 		{ // Write your own semantic action here.

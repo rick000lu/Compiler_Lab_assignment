@@ -1,9 +1,9 @@
 
 extern int yylex();
 extern int yyparse();
-extern FILE *yyin;
-extern FILE *yyout;
-extern FILE *yyerr;
+extern FILE* yyin;
+extern FILE* yyout;
+extern FILE* yyerr;
 
 extern char name[16];
 extern int ival;
@@ -59,44 +59,44 @@ extern char qstr[80];
 #define tMAX 4
 
 typedef struct t_exp {
-  int exp_id;
-  char name[16];
-  int  ival;
-  float rval;
-  char qstr[80];
-  struct t_exp *exp1;
-  struct t_exp *next;
+    int exp_id;
+    char name[16];
+    int ival;
+    float rval;
+    char qstr[80];
+    struct t_exp* exp1;
+    struct t_exp* next;
 } tEXP;
 
 typedef struct t_stm {
-  int stm_id;
-  struct t_exp *exp1;
-  struct t_exp *exp2;
-  struct t_stm *stm1;
-  struct t_stm *stm2;
-  struct t_stm *next;
+    int stm_id;
+    struct t_exp* exp1;
+    struct t_exp* exp2;
+    struct t_stm* stm1;
+    struct t_stm* stm2;
+    struct t_stm* next;
 } tSTM;
 
 typedef struct sym_node {
-  char name[16];
-  int type;
-  struct sym_node *next;
+    char name[16];
+    int type;
+    struct sym_node* next;
 } symNODE;
 
 extern tEXP* create_exp();
 extern tSTM* create_stm();
-extern symNODE* create_symnode( char*, int );
-extern void free_exp( tEXP* );
-extern void free_stm( tSTM* );
-extern void free_symnode( symNODE* );
-extern void print_exp( tEXP* );
-extern void gen_exp( tEXP* );
-extern void print_stm( tSTM* );
-extern void gen_code( tSTM* );
-extern int lookup( symNODE*, char* );
+extern symNODE* create_symnode(char*, int);
+extern void free_exp(tEXP*);
+extern void free_stm(tSTM*);
+extern void free_symnode(symNODE*);
+extern void print_exp(tEXP*);
+extern void gen_exp(tEXP*);
+extern void print_stm(tSTM*);
+extern void gen_code(tSTM*);
+extern int lookup(symNODE*, char*);
 extern void init_all();
 extern void gen_rwcode();
-extern int ana_exptype( tEXP* );
+extern int ana_exptype(tEXP*);
 
 extern tSTM* program;
 extern char name[16];
@@ -104,5 +104,4 @@ extern int ival;
 extern float rval;
 extern char qstr[80];
 extern int gen_rw[2][3];
-extern symNODE *symtab;
-
+extern symNODE* symtab;
