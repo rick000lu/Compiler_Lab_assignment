@@ -162,18 +162,28 @@ vardcl	:	type lID lSEMI
 		{ // Write your own semantic action here.
 			$$ = create_stm();
 			$$ -> stm_id = sVDCL1;
-			$$ -> exp1 = create_exp();
-			$$ -> exp1 -> exp_id = eID;
+			printf("MyTiny parse: vardcl1 ok!\n");
+			$$ -> exp1 = $1;
 			strcpy($$ -> exp1 -> name, $2);
-			$$ -> exp1 -> exp1 = $1; 
 		}
 	|	type astm
 		{ // Write your own semantic action here.
+			$$ = create_stm();
+			$$ -> stem_id = sVDCL2;
+			printf("MyTiny parse: vardcl2 ok!\n");
+			$$ -> exp1 = $1;
+			$$ -> stm1 = $2;
 		}
 	;
 
 astm	:	lID lASSIGN expr lSEMI
 		{ // Write your own semantic action here.
+			$$ = create_stm();
+			$$ -> stm_id = sASTM;
+			$$ -> exp1 = create_exp();
+			$$ -> exp1 -> exp_id = eASSIGN1;
+			strcpy($$ -> exp1 -> name, $1);
+			$$ -> exp1 -> exp1 = $3;
 		}
 	;
 
@@ -185,6 +195,10 @@ rstm	:	lRETURN expr lSEMI
 
 istm	:	lIF lLP bexpr lRP stmt
 		{ // Write your own semantic action here.
+			$$ = create_stm();
+			$$ -> stm_id = sISTM;
+			$$ -> exp1 = $3;
+			$$ -> stm1 = $5;
 		}
 	|	lIF lLP bexpr lRP stmt lELSE stmt
 		{ $$ = create_stm();
@@ -196,11 +210,23 @@ istm	:	lIF lLP bexpr lRP stmt
 
 wstm	:	lWRITE lLP expr lCOMMA lQSTR lRP lSEMI
 		{ // Write your own semantic action here.
+			$$ = create_stm();
+			$$ -> stm_id = sWSTM;
+			$$ -> exp1 = create_exp();
+			$$ -> exp1 -> exp_id = eWSTM;
+			$$ -> exp1 -> exp1 = $3;
+			strcpy($$ -> exp1 -> qstr, $5);
 		}
 	;
 
 dstm	:	lREAD lLP lID lCOMMA lQSTR lRP lSEMI
 		{ // Write your own semantic action here.
+			$$ = create_stm();
+			$$ -> stm_id = sDSTM;
+			$$ -> exp1 = create_exp();
+			$$ -> exp1 -> exp_id = eDSTM;
+			strcpy($$ -> exp1 -> name, $3);
+			strcpy($$ -> exp1 -> qstr, $5);
 		}
 	;
 
@@ -227,14 +253,27 @@ mexprs	:	lADD mexpr mexprs
 
 mexpr	:	pexpr pexprs
 		{ // Write your own semantic action here.
+			$$ = create_exp();
+			$$ -> exp_id = eMEXP;
+			$$ -> exp1 = $1;
+			$$ -> next = $2;
 		}
 	;
 
 pexprs	:	lTIMES pexpr pexprs
 		{ // Write your own semantic action here.
+			$$ = create_exp();
+			$$ -> exp_id = eTIMES;
+			$$ -> exp1 = $2;
+			$$ -> next = $3;
+
 		}
 	|	lDIVIDE pexpr pexprs
 		{ // Write your own semantic action here.
+			$$ = create_exp();
+			$$ -> exp_id = eDIVIDE;
+			$$ -> exp1 = $2;
+			$$ -> next = $3;
 		}
 	|
 		{ $$ = NULL; }
@@ -254,9 +293,11 @@ pexpr	:	lINUM
 		  strcpy( $$->name, $1 ); }
 	|	lLP expr lRP
 		{ // Write your own semantic action here.
+			$$ = $2;
 		}
 	|	lID lLP aparams lRP
 		{ // Write your own semantic action here.
+			
 		}
 	;
 
