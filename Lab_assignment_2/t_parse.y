@@ -165,6 +165,7 @@ vardcl	:	type lID lSEMI
 			printf("MyTiny parse: vardcl1 ok!\n");
 			$$ -> exp1 = $1;
 			strcpy($$ -> exp1 -> name, $2);
+			symtab = create_symnode($2, $1 -> ival);
 		}
 	|	type astm
 		{ // Write your own semantic action here.
@@ -173,6 +174,7 @@ vardcl	:	type lID lSEMI
 			printf("MyTiny parse: vardcl2 ok!\n");
 			$$ -> exp1 = $1;
 			$$ -> stm1 = $2;
+			symtab = create_symnode($2 -> exp1 -> name, $1 -> ival);
 		}
 	;
 
