@@ -266,7 +266,6 @@ pexprs	:	lTIMES pexpr pexprs
 			$$ -> exp_id = eTIMES;
 			$$ -> exp1 = $2;
 			$$ -> next = $3;
-
 		}
 	|	lDIVIDE pexpr pexprs
 		{ // Write your own semantic action here.
@@ -297,43 +296,78 @@ pexpr	:	lINUM
 		}
 	|	lID lLP aparams lRP
 		{ // Write your own semantic action here.
-			
+			$$ = create_exp();
+			$$ -> exp_id = eFUNC;
+			strcpy($$ -> name, $1);
+			$$ -> exp1 = $3;
 		}
 	;
 
 bexpr	:	expr lEQU expr
 		{ // Write your own semantic action here.
+			$$ = create_exp();
+			$$ -> exp_id = eEQ;
+			$$ -> exp1 = $1;
+			$$ -> next = $3;
 		}
 	|	expr lNEQ expr
 		{ // Write your own semantic action here.
+			$$ = create_exp();
+			$$ -> exp_id = eNE;
+			$$ -> exp1 = $1;
+			$$  -> next = $3;
 		}
 	|	expr lGT expr
 		{ // Write your own semantic action here.
+			$$ = create_exp();
+			$$ -> exp_id = eGT;
+			$$ -> exp1 = $1;
+			$$  -> next = $3;
 		}
 	|	expr lLT expr
 		{ // Write your own semantic action here.
+			$$ = create_exp();
+			$$ -> exp_id = eLT;
+			$$ -> exp1 = $1;
+			$$  -> next = $3;
 		}
 	|	expr lGE expr
 		{ // Write your own semantic action here.
+			$$ = create_exp();
+			$$ -> exp_id = eGE;
+			$$ -> exp1 = $1;
+			$$  -> next = $3;
 		}
 	|	expr lLE expr
 		{ // Write your own semantic action here.
+			$$ = create_exp();
+			$$ -> exp_id = eLE;
+			$$ -> exp1 = $1;
+			$$  -> next = $3;
 		}
 	;
 
 aparams	:	expr oparams
 		{ // Write your own semantic action here.
+			$$ = create_exp();
+			$$ -> exp_id = eAPARM;
+			$$ -> exp1 = $1;
+			$$ -> next = $3;
 		}
 	|
 		{ // Write your own semantic action here.
+			$$ = NULL;
 		}
 	;
 
 oparams	:	lCOMMA expr oparams
 		{ // Write your own semantic action here.
+			$$ = $2;
+			$$ -> next = $3;
 		}
 	|
 		{ // Write your own semantic action here.
+			$$ = NULL;
 		}
 	;
 

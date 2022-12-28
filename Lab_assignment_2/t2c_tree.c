@@ -396,10 +396,23 @@ void gen_code(tSTM *p) {
                 gen_exp(p->exp1);
                 break;
             case sRSTM:  // Write your own gen_code here.
+                fprintf(yyout, "return ");
+                gen_exp(p -> exp1);
                 break;
             case sISTM:  // Write your own gen_code here.
+                fprintf(yyout, "if (");
+                gen_exp(p -> exp1);
+                fprintf(yyout, ")");
+                gen_code(p -> stm1);
+                
+                //Check else
+                if (p -> stm2) {
+                    fprintf(yyout, "else");
+                    gen_code(p -> stm2);
+                }
                 break;
             case sWSTM:  // Write your own gen_code here.
+                
                 break;
             case sDSTM:  // Write your own gen_code here.
                 break;
