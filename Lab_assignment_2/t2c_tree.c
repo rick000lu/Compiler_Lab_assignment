@@ -331,7 +331,7 @@ void gen_exp(tEXP *p) {
             case eFUNC:  // Write your own gen_exp here.
                 fprintf(yyout, "%s(", p -> name);
                 gen_exp(p -> exp1);
-                fprintf(yyout, ");");
+                fprintf(yyout, ")");
                 break;
             case eEQ:  // Write your own gen_exp here.
                 gen_exp(p -> exp1);
@@ -376,14 +376,51 @@ void gen_exp(tEXP *p) {
                 fprintf(yyout, "%s = %s;\n", p->name, p->qstr);
                 break;
             case eWSTM:  // Write your own gen_exp here.
-                fprintf(yyout, "printf( ");
-                char* format_str = NULL;
-                
-
-
-
+                tEXP* tmp = NULL;
+                if(p -> exp1 -> exp1 -> exp1 -> exp_id == eID) {
+                    tmp = p -> exp1 -> exp1 -> exp1;
+                    int id_type = lookup(symtab, tmp -> name);
+                    switch(id_type) {
+                        case tINT:
+                            fprintf(yyout, "\ttiny_writeint(%s, %s);", tmp -> name, p -> qstr);
+                            break;
+                        
+                        case tREAL:
+                            fprintf(yyout, "\ttiny_writereal(%s, %s);", tmp -> name, p -> qstr);
+                            break;
+                        
+                        case tSTRING:
+                            fprintf(yyout, "\ttiny_writestr(%s, %s);", tmp -> name, p -> qstr);
+                            break;
+                    }
+                }
+                else {
+                    gen_exp(p -> exp1);
+                }
                 break;
             case eDSTM:  // Write your own gen_exp here.
+                tEXP* tmp = NULL;
+                if(p -> exp1 -> exp1 -> exp1 -> exp_id == eID) {
+                    tmp = p -> exp1 -> exp1 -> exp1;
+                    int id_type = lookup(symtab, tmp -> name);
+                    switch(id_type) {
+                        case tINT:
+                            fprintf(yyout, "\ttiny_readint(%s, %s);", tmp -> name, p -> qstr);
+                            break;
+                        
+                        case tREAL:
+                            fprintf(yyout, "\ttiny_readreal(%s, %s);", tmp -> name, p -> qstr);
+                            break;
+                        
+                        case tSTRING:
+                            fprintf(yyout, "\ttiny_readtr(%s, %s);", tmp -> name, p -> qstr);
+                            break;
+                    }
+                }
+                else {
+                    gen_exp(p -> exp1);
+                }
+
                 break;
             default:
                 fprintf(stderr, "******* An error in expressions!\n");
