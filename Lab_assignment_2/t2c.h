@@ -29,9 +29,10 @@
 #define L_MAX 27
 */
 
+#include <stdio.h>
 extern int yylex();
 extern int yyparse();
-extern FILE *yyin;
+extern FILE* yyin;
 extern int yyerror(char *);
 
 extern void print_lex( int );

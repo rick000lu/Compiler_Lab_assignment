@@ -253,7 +253,7 @@ void print_stm(tSTM *p) {
                 print_exp(p->exp1);
                 print_stm(p->stm1);
                 if (p->stm2) {
-                    printf("    else\n");
+                    printf("    else \n");
                     print_stm(p->stm2);
                 }
                 break;
@@ -365,7 +365,10 @@ void gen_exp(tEXP *p) {
                 break;
             case eAPARM:  // Write your own gen_exp here.
                 gen_exp(p -> exp1);
-                gen_exp(p -> next);
+                if(p -> next) {
+                    fprintf(yyout, ",");
+                    gen_exp(p -> next);
+                }
                 break;
             case eASSIGN1:
                 fprintf(yyout, "%s = ", p->name);
@@ -376,21 +379,22 @@ void gen_exp(tEXP *p) {
                 fprintf(yyout, "%s = %s;\n", p->name, p->qstr);
                 break;
             case eWSTM:  // Write your own gen_exp here.
-                tEXP* tmp = NULL;
+                te =  NULL;
+                //printf("write test\n");
                 if(p -> exp1 -> exp1 -> exp1 -> exp_id == eID) {
-                    tmp = p -> exp1 -> exp1 -> exp1;
-                    int id_type = lookup(symtab, tmp -> name);
+                    te = p -> exp1 -> exp1 -> exp1;
+                    int id_type = lookup(symtab, te -> name);
                     switch(id_type) {
                         case tINT:
-                            fprintf(yyout, "\ttiny_writeint(%s, %s);", tmp -> name, p -> qstr);
+                            fprintf(yyout, "tiny_writeint(%s, %s);\n", te -> name, p -> qstr);
                             break;
                         
                         case tREAL:
-                            fprintf(yyout, "\ttiny_writereal(%s, %s);", tmp -> name, p -> qstr);
+                            fprintf(yyout, "tiny_writereal(%s, %s);\n", te -> name, p -> qstr);
                             break;
                         
                         case tSTRING:
-                            fprintf(yyout, "\ttiny_writestr(%s, %s);", tmp -> name, p -> qstr);
+                            fprintf(yyout, "tiny_writestr(%s, %s);\n", te -> name, p -> qstr);
                             break;
                     }
                 }
@@ -399,26 +403,19 @@ void gen_exp(tEXP *p) {
                 }
                 break;
             case eDSTM:  // Write your own gen_exp here.
-                tEXP* tmp = NULL;
-                if(p -> exp1 -> exp1 -> exp1 -> exp_id == eID) {
-                    tmp = p -> exp1 -> exp1 -> exp1;
-                    int id_type = lookup(symtab, tmp -> name);
-                    switch(id_type) {
-                        case tINT:
-                            fprintf(yyout, "\ttiny_readint(%s, %s);", tmp -> name, p -> qstr);
-                            break;
-                        
-                        case tREAL:
-                            fprintf(yyout, "\ttiny_readreal(%s, %s);", tmp -> name, p -> qstr);
-                            break;
-                        
-                        case tSTRING:
-                            fprintf(yyout, "\ttiny_readtr(%s, %s);", tmp -> name, p -> qstr);
-                            break;
-                    }
-                }
-                else {
-                    gen_exp(p -> exp1);
+                te = NULL;
+                int id_type = lookup(symtab, p -> name);
+                switch(id_type) {
+                    case tINT:
+                        fprintf(yyout, "tiny_readint(&%s, %s);\n", p -> name, p -> qstr);
+                        break;
+                    
+                    case tREAL:
+                        fprintf(yyout, "tiny_readreal(&%s, %s);\n", p -> name, p -> qstr);
+                        break;
+                    
+                    case tSTRING:
+                        fprintf(yyout, "tiny_readstr(%s, %s);\n", p -> name, p -> qstr);
                 }
 
                 break;
@@ -453,9 +450,9 @@ void gen_code(tSTM *p) {
                 gen_code(p->stm1);
                 break;
             case sBLOCK:
-                fprintf(yyout, "{ ");
+                fprintf(yyout, "{ \n");
                 gen_code(p->stm1);
-                fprintf(yyout, "}\n");
+                fprintf(yyout, "\n}\n");
                 break;
             case sVDCL1:
                 gen_exp(p->exp1);
@@ -472,17 +469,20 @@ void gen_code(tSTM *p) {
             case sRSTM:  // Write your own gen_code here.
                 fprintf(yyout, "return ");
                 gen_exp(p -> exp1);
+                fprintf(yyout, ";");
                 break;
             case sISTM:  // Write your own gen_code here.
                 fprintf(yyout, "if (");
                 gen_exp(p -> exp1);
-                fprintf(yyout, ")");
+                fprintf(yyout, ")\n{\n");
                 gen_code(p -> stm1);
+                fprintf(yyout, "\n}");
                 
                 //Check else
                 if (p -> stm2) {
-                    fprintf(yyout, "else");
+                    fprintf(yyout, "else\n {");
                     gen_code(p -> stm2);
+                    fprintf(yyout, "\n}");
                 }
                 break;
             case sWSTM:  // Write your own gen_code here.
@@ -523,7 +523,7 @@ void init_all() {
     // initialize gen_rw
     for (i = 0; i < 2; i++)
         for (j = 0; j < 3; j++)
-            gen_rw[i][j] = 0;
+            gen_rw[i][j] = 1;
     printf("mytiny2c: init_all() done!\n");
 }
 

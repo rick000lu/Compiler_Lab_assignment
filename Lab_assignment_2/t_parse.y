@@ -170,7 +170,7 @@ vardcl	:	type lID lSEMI
 	|	type astm
 		{ // Write your own semantic action here.
 			$$ = create_stm();
-			$$ -> stem_id = sVDCL2;
+			$$ -> stm_id = sVDCL2;
 			printf("MyTiny parse: vardcl2 ok!\n");
 			$$ -> exp1 = $1;
 			$$ -> stm1 = $2;
@@ -354,7 +354,7 @@ aparams	:	expr oparams
 			$$ = create_exp();
 			$$ -> exp_id = eAPARM;
 			$$ -> exp1 = $1;
-			$$ -> next = $3;
+			$$ -> next = $2;
 		}
 	|
 		{ // Write your own semantic action here.
