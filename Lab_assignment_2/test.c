@@ -40,5 +40,4 @@ tiny_readint(&y, "A42.input");
 int z;
 z = f2(x,y) + f2(y,x);
 tiny_writeint(z, "A4.output");
-
 }

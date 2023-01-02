@@ -30,5 +30,4 @@ int main ( )
 int x;
 x = 1;
 tiny_writeint(x, "x = ");
-
 }

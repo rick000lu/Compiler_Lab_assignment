@@ -378,30 +378,36 @@ void gen_exp(tEXP *p) {
             case eASSIGN2:
                 fprintf(yyout, "%s = %s;\n", p->name, p->qstr);
                 break;
-            case eWSTM:  // Write your own gen_exp here.
-                te =  NULL;
-                //printf("write test\n");
-                if(p -> exp1 -> exp1 -> exp1 -> exp_id == eID) {
-                    te = p -> exp1 -> exp1 -> exp1;
-                    int id_type = lookup(symtab, te -> name);
-                    switch(id_type) {
+            case eWSTM: { 
+                    // Write your own gen_exp here.
+                    int exp_type = ana_exptype(p -> exp1);
+                    switch (exp_type)
+                    {
                         case tINT:
-                            fprintf(yyout, "tiny_writeint(%s, %s);\n", te -> name, p -> qstr);
+                            fprintf(yyout, "tiny_writeint(");
+                            gen_exp(p -> exp1);
+                            fprintf(yyout, ", %s);", p -> qstr);
                             break;
                         
                         case tREAL:
-                            fprintf(yyout, "tiny_writereal(%s, %s);\n", te -> name, p -> qstr);
+                            fprintf(yyout, "tiny_writereal(");
+                            gen_exp(p -> exp1);
+                            fprintf(yyout, ", %s);", p -> qstr);
+                            break;
+
+                        case tSTRING:
+                            fprintf(yyout, "tiny_writestr(");
+                            gen_exp(p -> exp1);
+                            fprintf(yyout, ", %s);", p -> qstr);
                             break;
                         
-                        case tSTRING:
-                            fprintf(yyout, "tiny_writestr(%s, %s);\n", te -> name, p -> qstr);
+                        default:
+                            fprintf(stderr, "******* Type Error!\n");
                             break;
                     }
+
+                    break;
                 }
-                else {
-                    gen_exp(p -> exp1);
-                }
-                break;
             case eDSTM:  // Write your own gen_exp here.
                 te = NULL;
                 int id_type = lookup(symtab, p -> name);
@@ -514,8 +520,172 @@ int lookup(symNODE *p, char *s) {
 
 int ana_exptype(tEXP *p) {
     // Will get bonus if you implement an ana_exptype function.
-    int tmp = tINT;
-    return tmp;
+    static int prev_exp_type = tMIN;
+    int exp_type = tMIN;
+    if(p) {
+        switch (p -> exp_id) {
+            case eINUM:
+                switch (prev_exp_type)
+                {
+                    case tMIN:
+                        exp_type = tINT;
+                        prev_exp_type = tINT;
+                        break;
+                    
+                    case tINT:
+                        exp_type = tINT;
+                        prev_exp_type = tINT;
+                        break;
+                    
+                    case tREAL:
+                        exp_type = tREAL;
+                        prev_exp_type = tREAL;
+                        break;
+                    
+                    default:
+                        exp_type = tMAX;
+                        prev_exp_type = tMAX;
+                        break;
+                }
+                
+                return exp_type;
+                break;
+            
+            case eRNUM:
+                switch (prev_exp_type)
+                {
+                    case tMIN:
+                        exp_type = tREAL;
+                        prev_exp_type = tREAL;
+                        break;
+                    
+                    case tINT:
+                        exp_type = tREAL;
+                        prev_exp_type = tREAL;
+                        break;
+                    
+                    case tREAL:
+                        exp_type = tREAL;
+                        prev_exp_type = tREAL;
+                        break;
+                    
+                    default:
+                        exp_type = tMAX;
+                        prev_exp_type = tMAX;
+                        break;
+                }
+                return exp_type;
+                break;
+            
+            case eID:
+                exp_type = lookup(symtab, p -> name);
+                switch (prev_exp_type)
+                {
+                    case tMIN:
+                        prev_exp_type = exp_type;
+                        break;
+                    
+                    case tINT:
+                        if(exp_type == tREAL) {
+                            prev_exp_type = tREAL;
+                        }
+                        else if(exp_type == tINT) {
+                            prev_exp_type = tINT;
+                        }
+                        else {
+                            prev_exp_type = tMAX;
+                        }
+
+                        break;
+                        
+                    case tREAL:
+                        if(exp_type == tREAL) {
+                            prev_exp_type = tREAL;
+                        }
+                        else if(exp_type == tINT) {
+                            exp_type = tREAL;
+                        }
+                        else {
+                            prev_exp_type = tMAX;
+                        }
+                        break;
+                    
+                    case tSTRING:
+                        if(exp_type == tSTRING) {
+                            prev_exp_type = tSTRING;
+                        }
+                        else {
+                            prev_exp_type = tMAX;
+                        }
+                        break;
+                    
+                    default:
+                        exp_type = tMAX;
+                        prev_exp_type = tMAX;
+                        break;
+                }
+                return exp_type;
+                break;
+            
+            case eFUNC:
+                exp_type = lookup(symtab, p -> name);
+                switch (prev_exp_type)
+                {
+                    case tMIN:
+                        prev_exp_type = exp_type;
+                        break;
+                    
+                    case tINT:
+                        if(exp_type == tREAL) {
+                            prev_exp_type = tREAL;
+                        }
+                        else if(exp_type == tINT) {
+                            prev_exp_type = tINT;
+                        }
+                        else {
+                            prev_exp_type = tMAX;
+                        }
+
+                        break;
+                        
+                    case tREAL:
+                        if(exp_type == tREAL) {
+                            prev_exp_type = tREAL;
+                        }
+                        else if(exp_type == tINT) {
+                            exp_type = tREAL;
+                        }
+                        else {
+                            prev_exp_type = tMAX;
+                        }
+                        break;
+                    
+                    case tSTRING:
+                        if(exp_type == tSTRING) {
+                            prev_exp_type = tSTRING;
+                        }
+                        else {
+                            prev_exp_type = tMAX;
+                        }
+                        break;
+                    
+                    default:
+                        exp_type = tMAX;
+                        prev_exp_type = tMAX;
+                        break;
+                }
+                return exp_type;
+                break;
+            
+            default:
+                ana_exptype(p -> exp1);
+                ana_exptype(p -> next);
+                break;
+        }
+    }
+    else {
+        return prev_exp_type;
+    }
 }
 
 void init_all() {

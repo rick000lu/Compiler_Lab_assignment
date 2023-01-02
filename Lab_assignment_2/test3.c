@@ -29,7 +29,8 @@ int fac ( int x)
 { 
 int z;
 if (x == 1)
-{z = 1;
+{
+z = 1;
 
 }else
  {z = x * fac(x - 1);
@@ -43,5 +44,4 @@ tiny_readint(&x, "Input an integer value for x:");
 int z;
 z = fac(x);
 tiny_writeint(z, "fac(x) =");
-
 }

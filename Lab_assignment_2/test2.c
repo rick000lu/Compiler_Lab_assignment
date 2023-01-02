@@ -29,5 +29,5 @@ int main ( )
 { 
 float r;
 tiny_readreal(&r, "Please input a real number as the radius of a circle:");
-2 * 3.140000 * r
+tiny_writereal(2 * 3.140000 * r, "The circumference of the circle is");
 }
